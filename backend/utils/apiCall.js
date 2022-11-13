@@ -1,4 +1,3 @@
-const fetch = require('node-fetch');
 const BASE_URL = process.env.BASE_URL;
 const API_KEY = process.env.API_KEY;
 const HEADERS = { 'Content-Type': 'application/json', macaroon: API_KEY };
