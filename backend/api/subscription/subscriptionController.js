@@ -1,7 +1,7 @@
 const debug = require('../../utils/debug');
 const subscriptionService = require('./subscriptionService');
 
-const signupController = async (req, res) => {
+const subscribeController = async (req, res) => {
     try {
         const { email, phone, password,  } = req.body;
         // const tier = req.body.tier;
@@ -36,4 +36,4 @@ const paymentController = async (req, res) => {
     }
 };
 
-module.exports = { signupController, paymentController };
+module.exports = { subscribeController, paymentController };
