@@ -1,5 +1,5 @@
-const LnurlAuth = require('passport-lnurl-auth');
 const debug = require('./utils/debug');
+const LnurlAuth = require('passport-lnurl-auth');
 const session = require('express-session');
 const passport = require('passport');
 const cors = require('cors');
@@ -24,6 +24,8 @@ const config = {
     };
 
 if (!config.url) config.url = 'http://' + config.host + ':' + config.port;
+
+process.env.URL = config.url;
 
 app.use(morgan('dev'));
 app.use(express.json({ limit: '50mb' }));
@@ -58,78 +60,13 @@ app.use(passport.authenticate('lnurl-auth'));
 app.get('/', async (req, res) => {
     if (!req.user) {
         return res.send(
-            'You are not authenticated. To login go <a href="/login">here</a>.'
+            'You are not authenticated. To login go <a href="/v1/signup/lnurl">here</a>.'
         );
     }
-    res.send('Logged-in');
-    // res.render('authenticated', { title: 'Logged in', userid: req.user.id });
-    // res.send(`Health check! Server running on port ${config.port}!`);
+    res.send(
+        `User ${req.user.id} Logged-in. To logout go <a href="/v1/logout">here</a>.`
+    );
 });
-
-app.get(
-    '/login',
-    function (req, res, next) {
-        if (req.user) {
-            // Already authenticated.
-            return res.redirect('/');
-        }
-        next();
-    }
-    // new LnurlAuth.Middleware({
-    //     callbackUrl: 'https://lightninglogin.live/login',
-    //     cancelUrl: 'https://lightninglogin.live/',
-    //     loginTemplateFilePath: path.join(__dirname, 'views', 'login.html'),
-    // })
-);
-
-app.get(
-    '/login',
-    function (req, res, next) {
-        if (req.user) {
-            return res.redirect('/');
-        }
-        next();
-    },
-    new LnurlAuth.Middleware({
-        // The externally reachable URL for the lnurl-auth middleware.
-        // It should resolve to THIS endpoint on your server.
-        callbackUrl: 'https://lightninglogin.live/login',
-        // The URL of the "Cancel" button on the login page.
-        // When set to NULL or some other falsey value, the cancel button will be hidden.
-        cancelUrl: 'https://lightninglogin.live/',
-        // Instruction text shown below the title on the login page:
-        instruction: 'Scan the QR code to login',
-        // The file path to the login.html template:
-        loginTemplateFilePath: path.join(
-            path.dirname(require.main.path),
-            'views',
-            'login.html'
-        ),
-        // The number of seconds to wait before refreshing the login page:
-        refreshSeconds: 5,
-        // The title of the login page:
-        title: 'Login with lnurl-auth',
-        // The URI schema prefix used before the encoded LNURL.
-        // e.g. "lightning:" or "LIGHTNING:" or "" (empty-string)
-        uriSchemaPrefix: 'LIGHTNING:',
-        // Options object passed to QRCode.toDataURL(data, options) - for further details:
-        // https://github.com/soldair/node-qrcode/#qr-code-options
-        qrcode: {
-            errorCorrectionLevel: 'L',
-            margin: 2,
-            type: 'image/png',
-        },
-    })
-);
-
-// app.get('/logout', function (req, res, next) {
-//     if (req.user) {
-//         // Already authenticated.
-//         req.session.destroy();
-//         return res.redirect('/');
-//     }
-//     next();
-// });
 
 app.use('/v1', require('./api'));
 

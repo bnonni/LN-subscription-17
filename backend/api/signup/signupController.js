@@ -1,20 +1,22 @@
 const debug = require('../../utils/debug');
 const signupService = require('./signupService');
+// const LnurlAuth = require('passport-lnurl-auth');
 
-const signupController = async (req, res) => {
+// const LNurlAuthController = async (req) => {
+//     const auth = new LnurlAuth.Middleware({
+//         callbackUrl: req.baseUrl + req.url,
+//         cancelUrl: req.url,
+//     });
+//     return auth;
+// };
+
+const regularController = async (req, res) => {
     try {
-        const { email, phone, password } = req.body;
-
-        // const tier = req.body.tier;
-        // const info = req.body.info;
-        // const recurrence = req.body.recurrence;
-        // const response = await subscriptionService.signup(info, tier, recurrence);
-
-        // debug.info(`Sign Up Response: ${JSON.stringify(response)}`);
-
-        // if (!response.success) res.status(500).json(response);
-        // else res.status(200).json(response);
-        console.log(tier, info, recurrence);
+        const { username, password } = req.body;
+        const response = await signupService.signup(username, password);
+        debug.info(`Sign Up Response: ${JSON.stringify(response)}`);
+        if (!response.success) res.status(500).json(response);
+        else res.status(200).json(response);
     } catch (error) {
         debug.error(error.stack);
         res.status(500).json({
@@ -24,4 +26,4 @@ const signupController = async (req, res) => {
     }
 };
 
-module.exports = { signupController };
+module.exports = { regularController, /*LNurlAuthController*/ };

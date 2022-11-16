@@ -2,7 +2,7 @@ const debug = require('../../utils/debug');
 const offerMap = require('../../utils/offerMap');
 const apiCall = require('../../utils/apiCall')
 
-const signup = async (info, tier, recurrence) => {
+const lnurl = async (info, tier, recurrence) => {
     try {
         const offerId = offerMap[tier + recurrence]
         const res = await apiCall(`/v1/offers/listOffers?offer_id=${offerId}`, 'GET')
@@ -15,16 +15,15 @@ const signup = async (info, tier, recurrence) => {
     }
 };
 
-const payment = async (tier, recurrence) => {
+const regular = async (username, password) => {
     try {
-        const offerId = offerMap[tier + recurrence]
-        const res = await apiCall(`/v1/offers/listOffers?offer_id=${offerId}`, 'GET')
-        const used = res.offers[0].used
-        return { success: true, message: used };    
+        // username, password
+        // store in DB
+        return { success: true };
     } catch (error) {
         debug.error(error.stack, error.status, error.message);
         throw new Error(error);
     }
 }
 
-module.exports = { signup, payment };
+module.exports = { lnurl, regular };
