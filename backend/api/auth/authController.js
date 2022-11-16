@@ -1,16 +1,7 @@
 const debug = require('../../utils/debug');
-const signupService = require('./signupService');
-// const LnurlAuth = require('passport-lnurl-auth');
+const signupService = require('./auth');
 
-// const LNurlAuthController = async (req) => {
-//     const auth = new LnurlAuth.Middleware({
-//         callbackUrl: req.baseUrl + req.url,
-//         cancelUrl: req.url,
-//     });
-//     return auth;
-// };
-
-const regularController = async (req, res) => {
+const userPassword = async (req, res) => {
     try {
         const { username, password } = req.body;
         const response = await signupService.signup(username, password);
@@ -26,4 +17,4 @@ const regularController = async (req, res) => {
     }
 };
 
-module.exports = { regularController, /*LNurlAuthController*/ };
+module.exports = { userPassword };

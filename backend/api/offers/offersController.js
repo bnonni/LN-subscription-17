@@ -1,30 +1,28 @@
 const debug = require('../../utils/debug');
-const subscriptionService = require('./subscriptionService');
+const offers = require('./offers');
 
-const subscribeController = async (req, res) => {
+const offerCreate = async (req, res) => {
     try {
-        const { email, phone, password,  } = req.body;
-        // const tier = req.body.tier;
-        // const info = req.body.info;
-        // const recurrence = req.body.recurrence;
-        // const response = await subscriptionService.signup(info, tier, recurrence);
+        // const { amount, description, label, recurrence } = req.body;
+        const response = await offers.create(req.body);
+        // TODO
 
         // debug.info(`Sign Up Response: ${JSON.stringify(response)}`);
 
         // if (!response.success) res.status(500).json(response);
         // else res.status(200).json(response);
-        console.log(tier, info, recurrence);
+        // console.log(tier, info, recurrence);
     } catch (error) {
         debug.error(error.stack);
         res.status(500).json({ message: error.message, error: error.stack });
     }
 };
 
-const paymentController = async (req, res) => {
+const offerInfo = async (req, res) => {
     try {
         const tier = req.body.tier;
         const recurrence = req.body.recurrence;
-        const response = await subscriptionService.paid(tier, recurrence);
+        const response = await offers.paid(tier, recurrence);
 
         debug.info(`Paid Response: ${JSON.stringify(response)}`);
 
@@ -36,4 +34,4 @@ const paymentController = async (req, res) => {
     }
 };
 
-module.exports = { subscribeController, paymentController };
+module.exports = { offerCreate, offerInfo };

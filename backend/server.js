@@ -1,10 +1,10 @@
-const debug = require('./utils/debug');
-const LnurlAuth = require('passport-lnurl-auth');
 const session = require('express-session');
-const passport = require('passport');
 const cors = require('cors');
 const morgan = require('morgan');
 const express = require('express');
+const debug = require('./utils/debug');
+const LnurlAuth = require('passport-lnurl-auth');
+const passport = require('passport');
 const path = require('path');
 
 const app = express();
@@ -64,7 +64,7 @@ app.get('/', async (req, res) => {
         );
     }
     res.send(
-        `User ${req.user.id} Logged-in. To logout go <a href="/v1/logout">here</a>.`
+        `User ${req.user.id} Logged-in. To logout go <a href="/v1/logout/lnurl">here</a>.`
     );
 });
 
