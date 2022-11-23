@@ -3,15 +3,29 @@ const offers = require('./offers');
 
 const offerCreate = async (req, res) => {
     try {
-        // const { amount, description, label, recurrence } = req.body;
-        const response = await offers.create(req.body);
-        // TODO
+        const { amount, description, label, recurrence } = req.body;
+        const response = await offers.create(amount, description, label, recurrence);
+        
+        debug.info(`Offer Create Response: ${JSON.stringify(response)}`);
 
-        // debug.info(`Sign Up Response: ${JSON.stringify(response)}`);
+        if (!response.success) res.status(500).json(response);
+        else res.status(200).json(response);
 
-        // if (!response.success) res.status(500).json(response);
-        // else res.status(200).json(response);
-        // console.log(tier, info, recurrence);
+    } catch (error) {
+        debug.error(error.stack);
+        res.status(500).json({ message: error.message, error: error.stack });
+    }
+};
+
+const offerList = async (req, res) => {
+    try {
+        const response = await offers.list();
+
+        debug.info(`Offer List Response: ${JSON.stringify(response)}`);
+
+        if (!response.success) res.status(500).json(response);
+        else res.status(200).json(response);
+
     } catch (error) {
         debug.error(error.stack);
         res.status(500).json({ message: error.message, error: error.stack });
@@ -20,18 +34,18 @@ const offerCreate = async (req, res) => {
 
 const offerInfo = async (req, res) => {
     try {
-        const tier = req.body.tier;
-        const recurrence = req.body.recurrence;
-        const response = await offers.paid(tier, recurrence);
+        const id = req.body.id;
+        const response = await offers.info(id);
 
-        debug.info(`Paid Response: ${JSON.stringify(response)}`);
+        debug.info(`Offer Info Response: ${JSON.stringify(response)}`);
 
         if (!response.success) res.status(500).json(response);
         else res.status(200).json(response);
+        
     } catch (error) {
         debug.error(error.stack);
         res.status(500).json({ message: error.message, error: error.stack });
     }
 };
 
-module.exports = { offerCreate, offerInfo };
+module.exports = { offerCreate, offerList, offerInfo };
