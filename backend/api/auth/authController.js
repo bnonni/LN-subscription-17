@@ -1,10 +1,10 @@
 const debug = require('../../utils/debug');
-const signupService = require('./auth');
+const auth = require('./auth');
 
 const signup = async (req, res) => {
     try {
         const { username, password, name, emailPhone } = req.body;
-        const response = await signupService.signup(
+        const response = await auth.signup(
             username,
             password,
             name,
@@ -25,7 +25,7 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
     try {
         const { username, password, name, emailPhone } = req.body;
-        const response = await signupService.signup(
+        const response = await auth.signup(
             username,
             password,
             name,
@@ -46,10 +46,10 @@ const login = async (req, res) => {
 const logout = async (req, res) => {
     try {
         const { username } = req.body;
-        const response = await signupService.logout(username);
+        const response = await auth.logout(username);
 
         debug.info(`Sign Up Response: ${JSON.stringify(response)}`);
-        
+
         if (!response.success) res.status(500).json(response);
         else res.status(200).json(response);
     } catch (error) {
