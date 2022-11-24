@@ -2,7 +2,7 @@ const express = require('express');
 const router = express();
 const ppLnurlAuth = require('passport-lnurl-auth');
 const path = require('path');
-const pathToFile = path.join(__dirname, '..', '..', 'views', 'login.html');
+const pathToFile = path.join(__dirname, '..', 'views', 'login.html');
 
 const { lnurlAuthIn, lnurlAuthOut } = require('./auth/authMiddleware');
 

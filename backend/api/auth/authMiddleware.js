@@ -7,7 +7,7 @@ const lnurlAuthIn = async (req, res, next) => {
 const lnurlAuthOut = async (req, res, next) => {
     if (req.user) {
         req.session.destroy();
-        return res.redirect('/');
+        return res.redirect('http://127.0.0.1:3000/');
     }
     next();
 }

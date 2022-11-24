@@ -1,9 +1,9 @@
 {
-  "name": "terminus-pay-server",
+  "name": "ln-subscription-17",
   "version": "0.0.1",
-  "description": "backend server for Terminus Electric Money Lab payment portal",
+  "description": "backend server for LN Subscription 17",
   "main": "server.js",
-  "repository": "git@github.com:atlantabitdevs/terminus-pay-server.git",
+  "repository": "git@github.com:bnonni/ln-subscription-17.git",
   "author": "bnonni <bryan@nonni.io>",
   "license": "MIT",
   "private": false,

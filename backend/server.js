@@ -65,9 +65,7 @@ app.get('/', async (req, res) => {
             'You are not authenticated. To login go <a href="/v1/signup/lnurl">here</a>.'
         );
     }
-    res.send(
-        `User ${req.user.id} Logged-in. To logout go <a href="/v1/logout/lnurl">here</a>.`
-    );
+    res.redirect('http://127.0.0.1:3000/dashboard');
 });
 
 app.use('/v1', require('./api'));
