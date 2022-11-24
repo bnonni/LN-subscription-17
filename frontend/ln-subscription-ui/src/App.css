@@ -1,0 +1,16 @@
+.app {
+	font-family: sans-serif;
+}
+
+.main-card {
+	text-align: center;
+	margin: auto;
+}
+
+.mock-qr {
+	height: 200px;
+	width: 200px;
+	border: 1px solid black;
+	margin: auto;
+}
+
